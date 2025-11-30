@@ -74,7 +74,7 @@ target_link_libraries(${MODULE_NAME}
         android
         EGL
         GLESv3
-        ${CMAKE_SOURCE_DIR}/libs/arm64-v8a/libdobby.a
+        ${CMAKE_SOURCE_DIR}/libs/${ANDROID_ABI}/libdobby.a
 )
 
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
