@@ -229,7 +229,7 @@ namespace AdvancedAntiBan {
     public:
         StatsNormalizer() : headshots(0), bodyshots(0), misses(0) {
             // Target accuracy: 60-75% (human-like)
-            accuracy_target = 0.60f + ((float)rand() / RAND_MAX) * 0.15f;
+            accuracy_target = 0.60f + ((float)rand() / (float)RAND_MAX) * 0.15f;
         }
         
         bool ShouldForceHeadshot() {
@@ -237,7 +237,7 @@ namespace AdvancedAntiBan {
             if (total == 0) return true;
             
             float current_hs_rate = (float)headshots / total;
-            float target_hs_rate = 0.25f + ((float)rand() / RAND_MAX) * 0.15f; // 25-40%
+            float target_hs_rate = 0.25f + ((float)rand() / (float)RAND_MAX) * 0.15f; // 25-40%
             
             return current_hs_rate < target_hs_rate;
         }

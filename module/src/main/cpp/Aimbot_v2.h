@@ -114,8 +114,8 @@ public:
     // Add micro-movements (human imperfection)
     Vector2 AddMicroMovements(Vector2 pos) {
         // Humans have small tremors
-        float tremorX = ((float)rand() / RAND_MAX - 0.5f) * 0.5f;
-        float tremorY = ((float)rand() / RAND_MAX - 0.5f) * 0.5f;
+        float tremorX = ((float)rand() / (float)RAND_MAX - 0.5f) * 0.5f;
+        float tremorY = ((float)rand() / (float)RAND_MAX - 0.5f) * 0.5f;
         
         return Vector2(pos.x + tremorX, pos.y + tremorY);
     }
@@ -124,8 +124,8 @@ public:
     Vector2 BezierCurve(Vector2 start, Vector2 end, float t) {
         // Add control point for curved movement
         Vector2 control;
-        control.x = (start.x + end.x) / 2.0f + ((float)rand() / RAND_MAX - 0.5f) * 20.0f;
-        control.y = (start.y + end.y) / 2.0f + ((float)rand() / RAND_MAX - 0.5f) * 20.0f;
+        control.x = (start.x + end.x) / 2.0f + ((float)rand() / (float)RAND_MAX - 0.5f) * 20.0f;
+        control.y = (start.y + end.y) / 2.0f + ((float)rand() / (float)RAND_MAX - 0.5f) * 20.0f;
         
         // Quadratic Bezier
         float invT = 1.0f - t;
@@ -150,7 +150,7 @@ public:
         }
         
         // Variable speed (humans don't move at constant speed)
-        float speed = 0.02f + ((float)rand() / RAND_MAX) * 0.03f;
+        float speed = 0.02f + ((float)rand() / (float)RAND_MAX) * 0.03f;
         progress += speed * deltaTime;
         
         if (progress >= 1.0f) {
@@ -186,7 +186,7 @@ public:
         isSearching = true;
         searchStartTime = GetTimeMs();
         searchCenter = approximateLocation;
-        searchRadius = 50.0f + ((float)rand() / RAND_MAX) * 50.0f;
+        searchRadius = 50.0f + ((float)rand() / (float)RAND_MAX) * 50.0f;
         searchSweeps = 2 + (rand() % 3);  // 2-4 sweeps
     }
     
@@ -243,13 +243,13 @@ public:
             actionCount > AimbotConfig::actionsBeforeFatigue) {
             isFatigued = true;
             // Performance degrades with fatigue
-            performanceMultiplier = 0.7f + ((float)rand() / RAND_MAX) * 0.2f;  // 70-90%
+            performanceMultiplier = 0.7f + ((float)rand() / (float)RAND_MAX) * 0.2f;  // 70-90%
         }
         
         // Random performance variations
         if (rand() % 10 == 0) {  // 10% chance
             // Bad moment (stress, distraction)
-            performanceMultiplier = 0.5f + ((float)rand() / RAND_MAX) * 0.3f;  // 50-80%
+            performanceMultiplier = 0.5f + ((float)rand() / (float)RAND_MAX) * 0.3f;  // 50-80%
         }
         
         // Recovery
@@ -348,8 +348,8 @@ public:
         if (perfMult < 1.0f) {
             // Add extra error when fatigued/stressed
             float extraError = (1.0f - perfMult) * 20.0f;
-            targetPos.x += ((float)rand() / RAND_MAX - 0.5f) * extraError;
-            targetPos.y += ((float)rand() / RAND_MAX - 0.5f) * extraError;
+            targetPos.x += ((float)rand() / (float)RAND_MAX - 0.5f) * extraError;
+            targetPos.y += ((float)rand() / (float)RAND_MAX - 0.5f) * extraError;
         }
         
         // Move cursor with human-like movement
@@ -396,12 +396,12 @@ private:
         }
         
         // Use configured probability
-        float roll = (float)rand() / RAND_MAX;
+        float roll = (float)rand() / (float)RAND_MAX;
         return roll < AimbotConfig::headshotProbability;
     }
     
     bool ShouldMissThisShot() {
-        float roll = (float)rand() / RAND_MAX;
+        float roll = (float)rand() / (float)RAND_MAX;
         return roll < AimbotConfig::missProbability;
     }
     
@@ -409,8 +409,8 @@ private:
         Vector2 targetPos(target->screenX, target->screenY);
         
         // Miss by 10-30 pixels in random direction
-        float missDistance = 10.0f + ((float)rand() / RAND_MAX) * 20.0f;
-        float missAngle = ((float)rand() / RAND_MAX) * 2.0f * M_PI;
+        float missDistance = 10.0f + ((float)rand() / (float)RAND_MAX) * 20.0f;
+        float missAngle = ((float)rand() / (float)RAND_MAX) * 2.0f * M_PI;
         
         targetPos.x += cosf(missAngle) * missDistance;
         targetPos.y += sinf(missAngle) * missDistance;

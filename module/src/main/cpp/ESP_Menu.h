@@ -139,7 +139,7 @@ void RandomDelay() {
 // Anti-Ban: Randomize float value slightly
 float RandomizeFloat(float value, float variance = 0.05f) {
     if (!MenuConfig::randomizeValues) return value;
-    float random = ((float)rand() / RAND_MAX) * 2.0f - 1.0f; // -1 to 1
+    float random = ((float)rand() / (float)RAND_MAX) * 2.0f - 1.0f; // -1 to 1
     return value + (value * random * variance);
 }
 

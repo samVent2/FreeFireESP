@@ -12,7 +12,13 @@
 #include <cstring>
 #include <sys/mman.h>
 #include <dlfcn.h>
+#include <sys/system_properties.h>
 #include "Includes/Logger.h"
+
+// Define PROP_VALUE_MAX if not defined
+#ifndef PROP_VALUE_MAX
+#define PROP_VALUE_MAX 92
+#endif
 
 namespace AntiBan {
     
@@ -42,7 +48,7 @@ namespace AntiBan {
     // Randomize float value within a percentage range
     float RandomizeFloat(float value, float variance_percent = 5.0f) {
         float variance = (variance_percent / 100.0f) * value;
-        float random = ((float)rand() / RAND_MAX) * 2.0f - 1.0f; // -1 to 1
+        float random = ((float)rand() / (float)RAND_MAX) * 2.0f - 1.0f; // -1 to 1
         return value + (random * variance);
     }
     
@@ -227,13 +233,13 @@ namespace AntiBan {
     bool SafeRead(uintptr_t address, T* out) {
         if (address == 0 || out == NULL) return false;
         
-        // Try to read, catch any crashes
-        __try {
-            *out = *(T*)address;
-            return true;
-        } __except(EXCEPTION_EXECUTE_HANDLER) {
+        // Check if memory is readable
+        if (msync((void*)(address & ~0xFFF), 4096, MS_ASYNC) != 0) {
             return false;
         }
+        
+        *out = *(T*)address;
+        return true;
     }
     
     // Safe memory write with error handling
@@ -241,12 +247,13 @@ namespace AntiBan {
     bool SafeWrite(uintptr_t address, T value) {
         if (address == 0) return false;
         
-        __try {
-            *(T*)address = value;
-            return true;
-        } __except(EXCEPTION_EXECUTE_HANDLER) {
+        // Check if memory is writable
+        if (msync((void*)(address & ~0xFFF), 4096, MS_ASYNC) != 0) {
             return false;
         }
+        
+        *(T*)address = value;
+        return true;
     }
     
     // Periodic security check

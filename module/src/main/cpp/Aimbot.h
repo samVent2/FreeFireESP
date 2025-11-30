@@ -103,8 +103,8 @@ bool IsInFOV(float centerX, float centerY, float targetX, float targetY, float f
 Vector2 AddHumanError(Vector2 target) {
     if (!AimbotConfig::humanize) return target;
     
-    float errorX = ((float)rand() / RAND_MAX - 0.5f) * 2.0f * AimbotConfig::humanError;
-    float errorY = ((float)rand() / RAND_MAX - 0.5f) * 2.0f * AimbotConfig::humanError;
+    float errorX = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.0f * AimbotConfig::humanError;
+    float errorY = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.0f * AimbotConfig::humanError;
     
     return Vector2(target.x + errorX, target.y + errorY);
 }
@@ -309,7 +309,7 @@ public:
         bool aimForHead = AimbotConfig::targetHead;
         if (AimbotConfig::humanize) {
             // Randomize based on probability
-            float roll = (float)rand() / RAND_MAX;
+            float roll = (float)rand() / (float)RAND_MAX;
             aimForHead = roll < AimbotConfig::headshotProbability;
         }
         
