@@ -10,6 +10,9 @@ message("Build type: ${CMAKE_BUILD_TYPE}")
 
 set(CMAKE_CXX_STANDARD 20)
 
+# Define OpenGL ES 3.0
+add_definitions(-DIMGUI_IMPL_OPENGL_ES3)
+
 set(LINKER_FLAGS "-ffixed-x18 -Wl,--hash-style=both")
 set(C_FLAGS "-Werror=format -fdata-sections -ffunction-sections")
 set(CXX_FLAGS "${CXX_FLAGS} -fno-exceptions -fno-rtti")
@@ -70,7 +73,7 @@ target_link_libraries(${MODULE_NAME}
         log
         android
         EGL
-        GLESv2
+        GLESv3
         ${CMAKE_SOURCE_DIR}/libs/arm64-v8a/libdobby.a
 )
 
