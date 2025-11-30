@@ -59,7 +59,7 @@ set(KITTYMEMORY_SRC
 
 # Main sources
 add_library(${MODULE_NAME} SHARED
-        main_new.cpp
+        main.cpp
         ${xdl-src}
         ${IMGUI_SRC}
         ${KITTYMEMORY_SRC}
